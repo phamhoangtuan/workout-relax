@@ -1070,10 +1070,16 @@ class UIController {
     this.$exFigure.innerHTML = '';
 
     if (exercise.videoId) {
+      const form = document.createElement('form');
+      form.action = `https://www.youtube.com/watch?v=${exercise.videoId}`;
+      form.target = '_blank';
+      form.method = 'GET';
+      form.style.display = 'none';
+
       const container = document.createElement('div');
       container.className = 'video-thumb-link';
       container.style.cursor = 'pointer';
-      container.title = `Watch ${exercise.name} demo on YouTube — click to open`;
+      container.title = `Watch ${exercise.name} demo on YouTube`;
 
       const img = document.createElement('img');
       img.src = `https://img.youtube.com/vi/${exercise.videoId}/hqdefault.jpg`;
@@ -1087,17 +1093,9 @@ class UIController {
 
       container.appendChild(img);
       container.appendChild(play);
+      container.appendChild(form);
 
-      container.addEventListener('click', () => {
-        const win = window.open(
-          `https://www.youtube.com/watch?v=${exercise.videoId}`,
-          '_blank',
-          'noopener,noreferrer'
-        );
-        if (!win || win.closed || typeof win.closed === 'undefined') {
-          alert(`Pop-up blocked! Watch here:\nhttps://www.youtube.com/watch?v=${exercise.videoId}`);
-        }
-      });
+      container.addEventListener('click', () => form.submit());
 
       this.$exFigure.appendChild(container);
       return;
