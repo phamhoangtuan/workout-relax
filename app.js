@@ -901,7 +901,6 @@ class UIController {
   showDay(dayKey) {
     this.selectedDay = dayKey;
 
-    // Update tabs
     for (const btn of this.$dayTabs.querySelectorAll('[data-day]')) {
       btn.classList.toggle('active', btn.dataset.day === dayKey);
     }
@@ -909,7 +908,12 @@ class UIController {
     const day = SCHEDULE[dayKey];
     if (!day) return;
 
-    // Render phases
+    if (day.isRest) {
+      this.$completeMsg.innerHTML = '<h2>🧘 Rest day — enjoy it!</h2><p>Sunday is for recovery. Light walk, yoga, or just relax. Your body needs it.</p>';
+      this.showComplete();
+      return;
+    }
+
     this.$phaseList.innerHTML = day.phases.map((p, pi) => `
       <div class="phase-card" style="border-left-color: ${p.color}">
         <div class="phase-card-header">
@@ -923,7 +927,7 @@ class UIController {
           ${p.exercises.map((eid, i) => {
             const ex = EXERCISES[eid];
             if (!ex) return '';
-            const repStr = ex.reps ? `${ex.reps} ${ex.type === 'hold' ? 'giây' : 'reps'}${ex.type.includes('each') ? '/bên' : ''}` : '';
+            const repStr = ex.reps ? `${ex.reps} ${ex.type === 'hold' ? 'sec' : 'reps'}${ex.type.includes('each') ? '/side' : ''}` : '';
             return `
               <div class="ex-row">
                 <span class="ex-num">${i + 1}</span>
@@ -935,7 +939,6 @@ class UIController {
       </div>
     `).join('');
 
-    // Bonus note for Saturday
     if (day.bonus) {
       this.$bonusNote.style.display = 'block';
       this.$bonusNote.textContent = day.bonus;
@@ -943,7 +946,6 @@ class UIController {
       this.$bonusNote.style.display = 'none';
     }
 
-    // Hide complete view if visible
     this.showSchedule();
   }
 
