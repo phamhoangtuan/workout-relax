@@ -1064,6 +1064,13 @@ class UIController {
 
 // ── INIT ────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
+  if (window.location.protocol === 'file:') {
+    const banner = document.createElement('div');
+    banner.style.cssText = 'background:#ff6b6b;color:#0b0b12;text-align:center;padding:12px 16px;font-weight:700;font-size:0.85rem;margin-bottom:16px;border-radius:8px;';
+    banner.innerHTML = '⚠️ Opened from <code>file://</code> — YouTube videos blocked.<br>Run <code>python3 -m http.server 8080</code> in this folder, then open <a href="http://localhost:8080" style="color:#0b0b12;text-decoration:underline;">http://localhost:8080</a><br>Or use the live site: <a href="https://phamhoangtuan.github.io/workout-relax/" style="color:#0b0b12;text-decoration:underline;">phamhoangtuan.github.io/workout-relax</a>';
+    document.getElementById('app').insertBefore(banner, document.getElementById('app').firstChild);
+  }
+
   const audio = new AudioEngine();
   new UIController(audio);
 });
