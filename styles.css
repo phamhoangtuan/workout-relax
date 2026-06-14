@@ -305,29 +305,21 @@ body.workout-active { background: #06060e; }
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 180px;
-}
-
-.video-thumb {
-  display: block;
-  width: 100%;
-  height: auto;
-  max-height: 360px;
-  object-fit: contain;
+  padding: 8px 0;
 }
 
 .figure-svg {
-  width: 180px;
-  height: 180px;
+  width: 100%;
+  max-width: 360px;
+  height: auto;
   overflow: visible;
-  padding: 10px;
 }
 
-.figure-svg .head { fill: none; stroke: var(--text); stroke-width: 2.5; }
-.figure-svg .limb { stroke: var(--text-dim); stroke-width: 2.5; stroke-linecap: round; }
-.figure-svg .joint { fill: var(--text); }
-.figure-svg .floor { stroke: var(--border); stroke-width: 1; stroke-dasharray: 4 4; }
-.figure-svg .wall { stroke: var(--text-muted); stroke-width: 2; stroke-dasharray: 6 4; }
+.figure-svg .head { fill: none; stroke-width: 2.5; }
+.figure-svg .limb { stroke-width: 2.5; stroke-linecap: round; }
+.figure-svg .joint { stroke-width: 0; }
+.figure-svg .floor { stroke-width: 1; stroke-dasharray: 4 4; }
+.figure-svg .wall { stroke-width: 2; stroke-dasharray: 6 4; }
 
 /* Reps indicator */
 .ex-reps {
@@ -489,22 +481,6 @@ body.workout-active { background: #06060e; }
   0% { transform: scale(0); opacity: 0; }
   60% { transform: scale(1.2); }
   100% { transform: scale(1); opacity: 1; }
-}
-
-/* Figure animations — subtle breathing effect for static poses */
-.figure-svg .fig-allfours { animation: subtleBob 3s ease-in-out infinite; }
-.figure-svg .fig-standing { animation: subtleBob 4s ease-in-out infinite; }
-.figure-svg .fig-lying { animation: subtleBob 3.5s ease-in-out infinite; }
-.figure-svg .fig-sidelying { animation: subtleBob 3s ease-in-out infinite; }
-.figure-svg .fig-prone { animation: subtleBob 3.5s ease-in-out infinite; }
-.figure-svg .fig-halfkneel { animation: subtleBob 3s ease-in-out infinite; }
-.figure-svg .fig-seated { animation: subtleBob 3s ease-in-out infinite; }
-.figure-svg .fig-inverted { animation: subtleBob 3s ease-in-out infinite; }
-.figure-svg .fig-kneeling { animation: subtleBob 3s ease-in-out infinite; }
-
-@keyframes subtleBob {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-2px); }
 }
 
 /* ── RESPONSIVE ───────────────────────────────────────────────── */

@@ -1068,217 +1068,234 @@ class UIController {
 
   _renderFigure(exercise) {
     this.$exFigure.innerHTML = '';
-
-    if (exercise.videoId) {
-      const img = document.createElement('img');
-      img.src = `assets/thumbs/${exercise.videoId}.jpg`;
-      img.alt = exercise.name;
-      img.className = 'video-thumb';
-      img.loading = 'lazy';
-      img.onerror = function() { this.style.display = 'none'; };
-
-      this.$exFigure.appendChild(img);
-      return;
-    }
-
-    const poses = {
-      'all-fours': { viewBox: '0 0 140 140', draw: this._drawAllFours },
-      'lying-supine': { viewBox: '0 0 140 100', draw: this._drawLyingSupine },
-      'side-lying': { viewBox: '0 0 100 120', draw: this._drawSideLying },
-      'prone': { viewBox: '0 0 140 100', draw: this._drawProne },
-      'standing': { viewBox: '0 0 100 160', draw: this._drawStanding },
-      'half-kneeling': { viewBox: '0 0 120 140', draw: this._drawHalfKneeling },
-      'seated': { viewBox: '0 0 140 120', draw: this._drawSeated },
-      'inverted': { viewBox: '0 0 120 140', draw: this._drawInverted },
-      'kneeling': { viewBox: '0 0 100 140', draw: this._drawKneeling }
-    };
-
-    const cfg = poses[exercise.pose] || poses['standing'];
     const svgNS = 'http://www.w3.org/2000/svg';
     const svg = document.createElementNS(svgNS, 'svg');
-    svg.setAttribute('viewBox', cfg.viewBox);
+    svg.setAttribute('viewBox', '0 0 320 140');
     svg.classList.add('figure-svg');
-    cfg.draw.call(this, svg, exercise);
+
+    const d = this._getPoseData(exercise);
+    if (d) {
+      this._drawDiagram(svg, d, exercise.phaseColor || '#4ecdc4');
+    }
     this.$exFigure.appendChild(svg);
   }
 
-  // ── FIGURE DRAWING HELPERS ──────────────────────
-  _el(tag, attrs = {}) {
-    const el = document.createElementNS('http://www.w3.org/2000/svg', tag);
-    for (const [k, v] of Object.entries(attrs)) {
-      el.setAttribute(k, String(v));
+  _getPoseData(ex) {
+    const id = ex.id;
+    // Each entry: { start: [...joints], end: [...joints], arrow?: [x1,y1,x2,y2] }
+    // Joints: [x, y] for head, shoulder, L_elbow, R_elbow, L_hand, R_hand, hip, L_knee, R_knee, L_foot, R_foot
+    const poses = {
+      'cat-cow': {
+        start: [[40,20],[40,40],[20,52],[60,52],[8,50],[72,50],[40,68],[22,86],[58,86],[14,104],[66,104]],
+        end:   [[40,20],[40,40],[20,35],[60,35],[8,50],[72,50],[40,55],[22,72],[58,72],[14,88],[66,88]],
+        desc: 'Inhale → Exhale',
+      },
+      'glute-bridge': {
+        start: [[90,48],[80,48],[62,58],[98,58],[44,72],[116,72],[68,48],[52,32],[84,32],[36,18],[100,18]],
+        end:   [[90,32],[80,32],[62,42],[98,42],[44,56],[116,56],[68,32],[52,18],[84,18],[36,8],[100,8]],
+        desc: 'Lift hips ↑',
+      },
+      'dead-bug': {
+        start: [[90,18],[82,30],[60,40],[104,40],[48,20],[116,20],[70,30],[54,18],[86,18],[36,32],[104,32]],
+        end:   [[90,18],[82,30],[42,20],[104,40],[60,8],[116,20],[70,30],[54,18],[86,48],[36,32],[104,60]],
+        desc: 'Extend opposite limbs',
+      },
+      'single-leg-bridge': {
+        start: [[90,48],[80,48],[62,58],[98,58],[44,72],[116,72],[68,48],[52,32],[84,45],[36,18],[100,30]],
+        end:   [[90,30],[80,30],[62,40],[98,40],[44,54],[116,54],[68,30],[52,14],[84,42],[36,8],[100,24]],
+        desc: 'Lift hips ↑ (single leg)',
+      },
+      'clamshell': {
+        start: [[50,18],[50,28],[30,22],[70,22],[18,18],[82,18],[50,43],[38,55],[62,50],[30,72],[76,62]],
+        end:   [[50,18],[50,28],[30,22],[70,22],[18,18],[82,18],[50,43],[38,55],[62,38],[30,72],[76,42]],
+        desc: 'Open knee →',
+      },
+      'prone-y': {
+        start: [[80,10],[80,22],[48,8],[112,8],[24,6],[136,6],[80,36],[62,52],[98,52],[50,68],[110,68]],
+        end:   [[80,10],[80,22],[48,2],[112,2],[24,0],[136,0],[80,36],[62,52],[98,52],[50,68],[110,68]],
+        desc: 'Lift arms in Y ↑',
+      },
+      'chin-tuck': {
+        start: [[50,14],[50,26],[28,40],[72,40],[14,56],[86,56],[50,52],[36,74],[64,74],[28,96],[72,96]],
+        end:   [[44,16],[48,26],[28,40],[72,40],[14,56],[86,56],[50,52],[36,74],[64,74],[28,96],[72,96]],
+        desc: 'Tuck chin ←',
+      },
+      'bird-dog': {
+        start: [[40,22],[40,42],[20,54],[60,54],[8,52],[72,52],[40,70],[22,90],[58,90],[14,108],[66,108]],
+        end:   [[40,22],[40,42],[8,20],[60,54],[0,10],[72,52],[40,70],[22,90],[58,108],[14,108],[66,126]],
+        desc: 'Extend opposite arm+leg',
+      },
+      'hip-flexor-stretch': {
+        start: [[50,10],[50,24],[30,44],[70,44],[16,60],[84,60],[50,50],[36,64],[64,62],[28,78],[68,74]],
+        end:   [[50,8],[55,24],[30,44],[70,44],[16,60],[84,60],[55,50],[36,64],[64,62],[28,78],[68,74]],
+        desc: 'Push hips forward →',
+      },
+      'hamstring-stretch': {
+        start: [[70,18],[65,30],[50,42],[80,42],[36,60],[94,60],[60,42],[40,62],[80,62],[26,84],[94,84]],
+        end:   [[50,18],[45,30],[30,42],[60,42],[16,60],[74,60],[40,42],[20,62],[60,62],[6,84],[74,84]],
+        desc: 'Fold forward ↓',
+      },
+      'pec-stretch': {
+        start: [[50,14],[50,26],[28,22],[72,22],[14,16],[86,16],[50,52],[36,74],[64,74],[28,96],[72,96]],
+        end:   [[50,14],[50,26],[20,24],[80,24],[8,20],[92,20],[52,52],[36,74],[64,74],[28,96],[72,96]],
+        desc: 'Lean forward, arms open',
+      },
+      'upper-trap-stretch': {
+        start: [[50,14],[50,26],[28,40],[72,40],[14,56],[86,56],[50,60],[38,78],[62,78],[30,96],[70,96]],
+        end:   [[40,10],[50,26],[28,40],[72,40],[14,56],[86,56],[50,60],[38,78],[62,78],[30,96],[70,96]],
+        desc: 'Tilt head ←',
+      },
+      'downward-dog': {
+        start: [[40,22],[40,42],[20,54],[60,54],[8,52],[72,52],[40,70],[22,90],[58,90],[14,108],[66,108]],
+        end:   [[55,50],[55,65],[28,40],[82,40],[10,30],[100,30],[55,88],[40,108],[70,108],[32,126],[78,126]],
+        desc: 'Push hips up ↑',
+      },
+      'childs-pose': {
+        start: [[40,22],[40,42],[20,54],[60,54],[8,52],[72,52],[40,70],[22,90],[58,90],[14,108],[66,108]],
+        end:   [[20,22],[18,42],[4,32],[32,32],[2,28],[34,28],[28,62],[18,82],[38,82],[16,98],[40,98]],
+        desc: 'Fold forward, rest ↓',
+      },
+      'wall-angel': {
+        start: [[50,14],[50,26],[30,28],[70,28],[20,30],[80,30],[50,52],[36,74],[64,74],[28,96],[72,96]],
+        end:   [[50,14],[50,26],[30,18],[70,18],[20,14],[80,14],[50,52],[36,74],[64,74],[28,96],[72,96]],
+        desc: 'Slide arms up ↑',
+      },
+      'wall-posture': {
+        start: [[50,14],[50,26],[28,40],[72,40],[14,56],[86,56],[50,52],[36,74],[64,74],[28,96],[72,96]],
+        end:   [[50,14],[50,26],[28,40],[72,40],[14,56],[86,56],[50,52],[36,74],[64,74],[28,96],[72,96]],
+        desc: 'Hold — heels, glutes, shoulders, head on wall',
+      },
+      'fire-hydrant': {
+        start: [[40,22],[40,42],[20,54],[60,54],[8,52],[72,52],[40,70],[22,90],[58,90],[14,108],[66,108]],
+        end:   [[40,22],[40,42],[20,54],[60,54],[8,52],[72,52],[40,70],[22,90],[70,82],[14,108],[78,76]],
+        desc: 'Lift knee out →',
+      },
+      'glute-bridge-march': {
+        start: [[90,32],[80,32],[62,42],[98,42],[44,56],[116,56],[68,32],[52,18],[84,18],[36,8],[100,8]],
+        end:   [[90,32],[80,32],[62,42],[98,42],[44,56],[116,56],[68,32],[52,18],[84,40],[36,8],[100,44]],
+        desc: 'March leg ↑ alternate',
+      },
+      'donkey-kick': {
+        start: [[40,22],[40,42],[20,54],[60,54],[8,52],[72,52],[40,70],[22,90],[58,90],[14,108],[66,108]],
+        end:   [[40,22],[40,42],[20,54],[60,54],[8,52],[72,52],[40,70],[22,90],[58,72],[14,108],[66,56]],
+        desc: 'Kick heel up ↑',
+      },
+      'side-lying-leg-lift': {
+        start: [[50,18],[50,28],[30,22],[70,22],[18,18],[82,18],[50,43],[38,55],[62,50],[30,72],[76,62]],
+        end:   [[50,18],[50,28],[30,22],[70,22],[18,18],[82,18],[50,43],[38,55],[62,30],[30,72],[76,34]],
+        desc: 'Lift top leg ↑',
+      },
+      't-raise': {
+        start: [[80,10],[80,22],[50,18],[110,18],[28,20],[132,20],[80,36],[62,52],[98,52],[50,68],[110,68]],
+        end:   [[80,10],[80,22],[50,10],[110,10],[28,8],[132,8],[80,36],[62,52],[98,52],[50,68],[110,68]],
+        desc: 'Lift arms in T ↑',
+      },
+      'plank-shoulder-tap': {
+        start: [[50,8],[50,24],[28,18],[72,18],[10,30],[90,30],[50,42],[30,62],[70,62],[18,82],[82,82]],
+        end:   [[50,8],[50,24],[42,18],[72,18],[28,30],[90,30],[50,42],[30,62],[70,62],[18,82],[82,82]],
+        desc: 'Tap shoulder, keep hips still',
+      },
+      'couch-stretch': {
+        start: [[50,10],[50,24],[30,44],[70,44],[16,60],[84,60],[50,50],[36,64],[64,62],[28,78],[68,74]],
+        end:   [[50,8],[55,24],[30,44],[70,44],[16,60],[84,60],[55,50],[36,64],[68,58],[28,78],[72,68]],
+        desc: 'Drive hip forward → (deep)',
+      },
+      'standing-hamstring-stretch': {
+        start: [[50,14],[50,26],[28,40],[72,40],[14,56],[86,56],[50,60],[38,78],[62,78],[30,96],[70,96]],
+        end:   [[50,28],[50,40],[28,54],[72,54],[14,70],[86,70],[50,68],[38,78],[72,66],[30,96],[86,70]],
+        desc: 'Hinge forward, back straight',
+      },
+      'thread-the-needle': {
+        start: [[40,22],[40,42],[20,54],[60,54],[8,52],[72,52],[40,70],[22,90],[58,90],[14,108],[66,108]],
+        end:   [[40,22],[40,42],[12,36],[60,54],[20,28],[72,52],[40,70],[22,90],[58,90],[14,108],[66,108]],
+        desc: 'Thread arm through, rotate',
+      },
+    };
+    return poses[id] || null;
+  }
+
+  _drawDiagram(svg, data, color) {
+    const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+    this._drawBody(g, data.start, color, 0.6);
+    this._drawBody(g, data.end, color, 1.0);
+    this._drawArrow(g, data.start, data.end, color);
+    if (data.desc) {
+      const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+      text.setAttribute('x', '160');
+      text.setAttribute('y', '134');
+      text.setAttribute('text-anchor', 'middle');
+      text.setAttribute('fill', color);
+      text.setAttribute('font-size', '11');
+      text.setAttribute('font-weight', '600');
+      text.textContent = data.desc;
+      g.appendChild(text);
     }
-    return el;
-  }
-
-  _line(x1, y1, x2, y2, cls = '') {
-    return this._el('line', { x1, y1, x2, y2, class: `limb ${cls}` });
-  }
-
-  _circle(cx, cy, r, cls = '') {
-    return this._el('circle', { cx, cy, r, class: `joint ${cls}` });
-  }
-
-  _head(cx, cy) {
-    return this._el('circle', { cx, cy, r: '8', class: 'head' });
-  }
-
-  /* All-fours: cat-cow, bird-dog */
-  _drawAllFours(svg, ex) {
-    const g = this._el('g', { class: 'fig-allfours' });
-    g.appendChild(this._head(50, 18));                    // head
-    g.appendChild(this._line(50, 26, 50, 65));            // torso (spine)
-    g.appendChild(this._line(50, 36, 30, 55));            // arm L upper
-    g.appendChild(this._line(30, 55, 15, 75));            // arm L lower
-    g.appendChild(this._line(50, 36, 70, 55));            // arm R upper
-    g.appendChild(this._line(70, 55, 85, 75));            // arm R lower
-    g.appendChild(this._line(50, 65, 35, 90));            // leg L upper
-    g.appendChild(this._line(35, 90, 28, 115));           // leg L lower
-    g.appendChild(this._line(50, 65, 65, 90));            // leg R upper
-    g.appendChild(this._line(65, 90, 72, 115));           // leg R lower
-    // Floor line
-    g.appendChild(this._el('line', { x1: 8, y1: 115, x2: 92, y2: 115, class: 'floor' }));
     svg.appendChild(g);
   }
 
-  /* Lying supine: glute bridge, dead bug, single-leg bridge */
-  _drawLyingSupine(svg, ex) {
-    const g = this._el('g', { class: 'fig-lying' });
-    g.appendChild(this._head(95, 35));                    // head
-    g.appendChild(this._line(87, 35, 52, 35));            // torso
-    g.appendChild(this._line(75, 35, 58, 55));            // arm L
-    g.appendChild(this._line(65, 35, 48, 55));            // arm R
-    g.appendChild(this._line(48, 35, 32, 50));            // leg L upper
-    g.appendChild(this._line(32, 50, 18, 18));            // leg L lower
-    g.appendChild(this._line(58, 35, 68, 50));            // leg R upper
-    g.appendChild(this._line(68, 50, 80, 18));            // leg R lower
-    g.appendChild(this._el('line', { x1: 5, y1: 18, x2: 95, y2: 18, class: 'floor' }));
-    svg.appendChild(g);
+  _drawBody(g, joints, color, opacity) {
+    const [h, s, le, re, lh, rh, hp, lk, rk, lf, rf] = joints;
+    const ns = 'http://www.w3.org/2000/svg';
+    const mkLine = (a, b) => {
+      const l = document.createElementNS(ns, 'line');
+      l.setAttribute('x1', a[0]); l.setAttribute('y1', a[1]);
+      l.setAttribute('x2', b[0]); l.setAttribute('y2', b[1]);
+      l.setAttribute('stroke', color);
+      l.setAttribute('stroke-width', '4');
+      l.setAttribute('stroke-linecap', 'round');
+      l.setAttribute('stroke-linejoin', 'round');
+      l.setAttribute('opacity', opacity);
+      g.appendChild(l);
+    };
+    const mkCircle = (c, r) => {
+      const ci = document.createElementNS(ns, 'circle');
+      ci.setAttribute('cx', c[0]); ci.setAttribute('cy', c[1]); ci.setAttribute('r', r);
+      ci.setAttribute('fill', color);
+      ci.setAttribute('opacity', opacity);
+      g.appendChild(ci);
+    };
+    mkCircle(h, 7);
+    mkLine(h, s);
+    mkLine(s, hp);
+    mkLine(s, le); mkLine(le, lh);
+    mkLine(s, re); mkLine(re, rh);
+    mkLine(hp, lk); mkLine(lk, lf);
+    mkLine(hp, rk); mkLine(rk, rf);
+    mkCircle(s, 3); mkCircle(hp, 3);
+    mkCircle(le, 2.5); mkCircle(re, 2.5);
+    mkCircle(lk, 2.5); mkCircle(rk, 2.5);
   }
 
-  /* Side-lying: clamshell */
-  _drawSideLying(svg, ex) {
-    const g = this._el('g', { class: 'fig-sidelying' });
-    g.appendChild(this._head(30, 20));
-    g.appendChild(this._line(30, 28, 30, 55));
-    g.appendChild(this._line(30, 35, 48, 25));
-    g.appendChild(this._line(30, 35, 48, 45));
-    g.appendChild(this._line(30, 55, 18, 75));
-    g.appendChild(this._line(18, 75, 8, 95));
-    g.appendChild(this._line(30, 55, 42, 68));
-    g.appendChild(this._line(42, 68, 52, 85));
-    g.appendChild(this._el('line', { x1: 5, y1: 95, x2: 55, y2: 95, class: 'floor' }));
-    svg.appendChild(g);
-  }
-
-  /* Prone: Y raise */
-  _drawProne(svg, ex) {
-    const g = this._el('g', { class: 'fig-prone' });
-    g.appendChild(this._head(45, 12));
-    g.appendChild(this._line(45, 20, 45, 45));
-    g.appendChild(this._line(45, 25, 20, 10));            // arm L up (Y)
-    g.appendChild(this._line(45, 25, 70, 10));            // arm R up (Y)
-    g.appendChild(this._line(45, 45, 30, 58));
-    g.appendChild(this._line(30, 58, 20, 72));
-    g.appendChild(this._line(45, 45, 60, 58));
-    g.appendChild(this._line(60, 58, 70, 72));
-    g.appendChild(this._el('line', { x1: 10, y1: 72, x2: 80, y2: 72, class: 'floor' }));
-    svg.appendChild(g);
-  }
-
-  /* Standing: chin tuck, pec stretch, trap stretch, wall angel, wall posture */
-  _drawStanding(svg, ex) {
-    const g = this._el('g', { class: 'fig-standing' });
-    g.appendChild(this._head(50, 18));
-    g.appendChild(this._line(50, 26, 50, 78));
-    g.appendChild(this._line(50, 36, 30, 58));
-    g.appendChild(this._line(30, 58, 15, 78));
-    g.appendChild(this._line(50, 36, 70, 58));
-    g.appendChild(this._line(70, 58, 85, 78));
-    g.appendChild(this._line(50, 78, 38, 108));
-    g.appendChild(this._line(38, 108, 32, 138));
-    g.appendChild(this._line(50, 78, 62, 108));
-    g.appendChild(this._line(62, 108, 68, 138));
-    // Wall line for wall exercises
-    if (ex.id === 'wall-angel' || ex.id === 'wall-posture') {
-      g.appendChild(this._el('line', { x1: 95, y1: 5, x2: 95, y2: 145, class: 'wall' }));
-    }
-    g.appendChild(this._el('line', { x1: 15, y1: 138, x2: 85, y2: 138, class: 'floor' }));
-    svg.appendChild(g);
-  }
-
-  /* Half-kneeling: hip flexor stretch */
-  _drawHalfKneeling(svg, ex) {
-    const g = this._el('g', { class: 'fig-halfkneel' });
-    g.appendChild(this._head(50, 15));
-    g.appendChild(this._line(50, 23, 50, 65));
-    g.appendChild(this._line(50, 32, 30, 52));
-    g.appendChild(this._line(50, 32, 70, 52));
-    g.appendChild(this._line(50, 65, 35, 85));            // kneeling leg
-    g.appendChild(this._line(35, 85, 25, 102));
-    g.appendChild(this._line(50, 65, 65, 80));            // forward leg
-    g.appendChild(this._line(65, 80, 68, 102));
-    g.appendChild(this._el('line', { x1: 15, y1: 102, x2: 80, y2: 102, class: 'floor' }));
-    svg.appendChild(g);
-  }
-
-  /* Seated: hamstring stretch */
-  _drawSeated(svg, ex) {
-    const g = this._el('g', { class: 'fig-seated' });
-    g.appendChild(this._head(60, 18));
-    g.appendChild(this._line(55, 26, 45, 60));
-    g.appendChild(this._line(48, 32, 35, 48));
-    g.appendChild(this._line(42, 42, 60, 50));
-    g.appendChild(this._line(45, 60, 30, 85));            // leg L
-    g.appendChild(this._line(30, 85, 18, 110));
-    g.appendChild(this._line(45, 60, 60, 85));            // leg R
-    g.appendChild(this._line(60, 85, 72, 110));
-    g.appendChild(this._el('line', { x1: 5, y1: 110, x2: 85, y2: 110, class: 'floor' }));
-    svg.appendChild(g);
-  }
-
-  /* Inverted: downward dog */
-  _drawInverted(svg, ex) {
-    const g = this._el('g', { class: 'fig-inverted' });
-    g.appendChild(this._head(60, 50));                    // head between arms
-    g.appendChild(this._line(60, 58, 60, 85));            // torso (inverted)
-    g.appendChild(this._line(60, 38, 30, 15));            // arm L
-    g.appendChild(this._line(30, 15, 15, 5));
-    g.appendChild(this._line(60, 38, 90, 15));            // arm R
-    g.appendChild(this._line(90, 15, 105, 5));
-    g.appendChild(this._line(60, 85, 45, 105));           // leg L
-    g.appendChild(this._line(45, 105, 38, 125));
-    g.appendChild(this._line(60, 85, 75, 105));           // leg R
-    g.appendChild(this._line(75, 105, 82, 125));
-    g.appendChild(this._el('line', { x1: 5, y1: 125, x2: 115, y2: 125, class: 'floor' }));
-    svg.appendChild(g);
-  }
-
-  /* Kneeling: child's pose */
-  _drawKneeling(svg, ex) {
-    const g = this._el('g', { class: 'fig-kneeling' });
-    g.appendChild(this._head(25, 25));                    // head low
-    g.appendChild(this._line(25, 33, 38, 60));            // torso angled
-    g.appendChild(this._line(32, 28, 8, 10));             // arm L forward
-    g.appendChild(this._line(18, 28, 2, 8));              // arm R forward
-    g.appendChild(this._line(38, 60, 30, 85));            // leg L
-    g.appendChild(this._line(30, 85, 28, 110));
-    g.appendChild(this._line(38, 60, 46, 85));            // leg R
-    g.appendChild(this._line(46, 85, 48, 110));
-    g.appendChild(this._el('line', { x1: 2, y1: 110, x2: 60, y2: 110, class: 'floor' }));
-    svg.appendChild(g);
+  _drawArrow(g, start, end, color) {
+    const ns = 'http://www.w3.org/2000/svg';
+    const hips = start[6], hipsEnd = end[6];
+    if (!hips || !hipsEnd) return;
+    const dx = hipsEnd[0] - hips[0], dy = hipsEnd[1] - hips[1];
+    if (Math.abs(dx) < 3 && Math.abs(dy) < 3) return;
+    const mx = hips[0] + dx * 0.5, my = hips[1] + dy * 0.5;
+    const arrow = document.createElementNS(ns, 'polygon');
+    const tipX = hipsEnd[0], tipY = hipsEnd[1];
+    const angle = Math.atan2(dy, dx);
+    const s = 7;
+    const p1 = [tipX - s * Math.cos(angle - 0.6), tipY - s * Math.sin(angle - 0.6)];
+    const p2 = [tipX - s * Math.cos(angle + 0.6), tipY - s * Math.sin(angle + 0.6)];
+    arrow.setAttribute('points', `${tipX},${tipY} ${p1[0]},${p1[1]} ${p2[0]},${p2[1]}`);
+    arrow.setAttribute('fill', color);
+    arrow.setAttribute('opacity', '0.8');
+    g.appendChild(arrow);
+    const line = document.createElementNS(ns, 'line');
+    line.setAttribute('x1', hips[0]); line.setAttribute('y1', hips[1]);
+    line.setAttribute('x2', tipX); line.setAttribute('y2', tipY);
+    line.setAttribute('stroke', color);
+    line.setAttribute('stroke-width', '2.5');
+    line.setAttribute('stroke-dasharray', '6 4');
+    line.setAttribute('opacity', '0.5');
+    g.appendChild(line);
   }
 }
 
 // ── INIT ────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
-  if (window.location.protocol === 'file:') {
-    const banner = document.createElement('div');
-    banner.style.cssText = 'background:#1e293b;color:#e2e8f0;text-align:center;padding:10px 16px;font-size:0.8rem;margin-bottom:16px;border-radius:8px;border:1px solid #334155;';
-    banner.innerHTML = '💡 For best experience (audio beeps): run <code style="background:#334155;padding:1px 6px;border-radius:4px;">python3 -m http.server 8080</code> → <a href="http://localhost:8080" style="color:#4ecdc4;">localhost:8080</a> · Live: <a href="https://phamhoangtuan.github.io/workout-relax/" style="color:#4ecdc4;">GitHub Pages</a>';
-    document.getElementById('app').insertBefore(banner, document.getElementById('app').firstChild);
-  }
-
   const audio = new AudioEngine();
   new UIController(audio);
 });
