@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Văn Phòng Reset — 30 Phút Mỗi Ngày</title>
-  <meta name="description" content="Bài tập 30 phút mỗi ngày cho dân văn phòng — reset cơ thể sau 8 tiếng ngồi">
+  <title>Office Relax — 30 Min Daily Workout</title>
+  <meta name="description" content="30-minute daily workout for office workers — reset your body after 8 hours of sitting">
   <meta name="theme-color" content="#0b0b12">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,32 +15,32 @@
   <div id="app">
     <!-- HEADER -->
     <header class="header">
-      <h1>🪨 Văn Phòng Reset</h1>
-      <p class="subtitle">30 phút mỗi ngày — Reset cơ thể sau 8h ngồi</p>
+      <h1>🪨 Office Relax</h1>
+      <p class="subtitle">30 min a day — Reset your body after 8h of sitting</p>
     </header>
 
     <!-- DAY SELECTOR -->
     <nav class="day-selector" id="day-tabs">
       <button class="day-btn active" data-day="monday">
-        <span class="day-icon">💪</span> Thứ 2
+        <span class="day-icon">💪</span> Mon
       </button>
       <button class="day-btn" data-day="tuesday">
-        <span class="day-icon">🔥</span> Thứ 3
+        <span class="day-icon">🔥</span> Tue
       </button>
       <button class="day-btn" data-day="wednesday">
-        <span class="day-icon">⚡</span> Thứ 4
+        <span class="day-icon">⚡</span> Wed
       </button>
       <button class="day-btn" data-day="thursday">
-        <span class="day-icon">🔄</span> Thứ 5
+        <span class="day-icon">🔄</span> Thu
       </button>
       <button class="day-btn" data-day="friday">
-        <span class="day-icon">🎯</span> Thứ 6
+        <span class="day-icon">🎯</span> Fri
       </button>
       <button class="day-btn" data-day="saturday">
-        <span class="day-icon">🌟</span> Thứ 7
+        <span class="day-icon">🌟</span> Sat
       </button>
       <button class="day-btn" data-day="sunday">
-        <span class="day-icon">🧘</span> CN
+        <span class="day-icon">🧘</span> Sun
       </button>
     </nav>
 
@@ -50,7 +50,7 @@
       <section id="schedule-view">
         <div class="phase-list" id="phase-list"></div>
         <div class="bonus-note" id="bonus-note"></div>
-        <button class="btn-start" id="start-workout">▶ Bắt đầu 30 phút</button>
+        <button class="btn-start" id="start-workout">▶ Start 30-Min Workout</button>
       </section>
 
       <!-- WORKOUT VIEW -->
@@ -85,12 +85,12 @@
         </div>
 
         <div class="workout-controls">
-          <button class="btn-pause" id="btn-pause">⏸ Tạm dừng</button>
-          <button class="btn-skip" id="btn-skip">⏭ Bỏ qua</button>
+          <button class="btn-pause" id="btn-pause">⏸ Pause</button>
+          <button class="btn-skip" id="btn-skip">⏭ Skip</button>
         </div>
 
         <div class="shortcut-hint">
-          Phím tắt: <kbd>Space</kbd> Tạm dừng · <kbd>→</kbd> Bỏ qua
+          Shortcuts: <kbd>Space</kbd> Pause · <kbd>→</kbd> Skip
         </div>
       </section>
 
@@ -98,7 +98,7 @@
       <section id="complete-view" class="hidden">
         <div class="complete-icon">🎉</div>
         <div id="complete-msg"></div>
-        <button class="btn-back" id="btn-back-schedule">← Về lịch tập</button>
+        <button class="btn-back" id="btn-back-schedule">← Back to Schedule</button>
       </section>
     </main>
   </div>

@@ -1,6 +1,6 @@
 /* ================================================================
-   VĂN PHÒNG RESET - 30 Phút Mỗi Ngày
-   Static web app for office worker daily reset workout
+   OFFICE RELAX - 30 Min Daily Workout
+   Static web app for office worker mobility & posture reset
    ================================================================ */
 
 // ── AUDIO ENGINE (Web Audio API beeps) ──────────────────────────
@@ -45,55 +45,52 @@ const EXERCISES = {
   'cat-cow': {
     id: 'cat-cow',
     name: 'Cat-Cow',
-    nameVi: 'Mèo - Bò',
     phase: 'warmup',
     duration: 90,
     reps: 10,
     type: 'rep',
     pose: 'all-fours',
     movement: 'spine-wave',
-    target: 'Cột sống, Lưng, Core',
+    target: 'Spine, Back, Core',
     instructions: [
-      'Quỳ 4 điểm: tay thẳng dưới vai, gối dưới hông',
-      'Hít vào: Võng lưng xuống, ngẩng đầu (Cow)',
-      'Thở ra: Cong lưng lên trần, cúi đầu, kéo rốn (Cat)',
-      'Lặp lại chậm rãi theo nhịp thở'
+      'Start on all fours: hands under shoulders, knees under hips',
+      'Inhale: arch back, lift head, push hips back (Cow)',
+      'Exhale: round spine toward ceiling, tuck chin, pull navel in (Cat)',
+      'Move slowly with your breath'
     ]
   },
   'glute-bridge': {
     id: 'glute-bridge',
     name: 'Glute Bridge',
-    nameVi: 'Nâng hông',
     phase: 'warmup',
     duration: 90,
     reps: 12,
     type: 'rep',
     pose: 'lying-supine',
     movement: 'hip-lift',
-    target: 'Glutes (Mông), Core',
+    target: 'Glutes, Core, Hamstrings',
     instructions: [
-      'Nằm ngửa, co gối, bàn chân rộng bằng hông',
-      'Siết mông → nâng hông đến khi thân tạo đường thẳng từ vai đến gối',
-      'Giữ đỉnh 2 giây — siết mông thật chặt',
-      'Từ từ hạ xuống và lặp lại'
+      'Lie on back, knees bent, feet flat hip-width apart',
+      'Squeeze glutes → lift hips until body forms straight line from shoulders to knees',
+      'Hold peak 2 seconds — squeeze glutes hard',
+      'Lower slowly and repeat'
     ]
   },
   'dead-bug': {
     id: 'dead-bug',
     name: 'Dead Bug',
-    nameVi: 'Dead Bug',
     phase: 'warmup',
     duration: 90,
     reps: 8,
     type: 'rep-each-side',
     pose: 'lying-supine',
     movement: 'contralateral',
-    target: 'Core sâu, Transversus abdominis',
+    target: 'Deep Core, Transversus abdominis',
     instructions: [
-      'Nằm ngửa, tay duỗi thẳng lên trần, chân co gối 90°',
-      'Giữ lưng dưới ÉP SÁT SÀN — không được cong',
-      'Duỗi tay phải ra sau + chân trái thẳng về trước',
-      'Trở về giữa → đổi bên. Luân phiên nhịp nhàng'
+      'Lie on back, arms extended toward ceiling, knees bent 90° (feet off floor)',
+      'Keep lower back PRESSED into floor — do not arch',
+      'Extend right arm back + left leg straight forward',
+      'Return to center → switch sides. Alternate smoothly'
     ]
   },
 
@@ -101,7 +98,6 @@ const EXERCISES = {
   'single-leg-bridge': {
     id: 'single-leg-bridge',
     name: 'Single-Leg Bridge',
-    nameVi: 'Nâng hông 1 chân',
     phase: 'strengthening',
     duration: 60,
     reps: 10,
@@ -110,82 +106,78 @@ const EXERCISES = {
     movement: 'hip-lift-single',
     target: 'Gluteus maximus, Hamstrings',
     instructions: [
-      'Nằm ngửa, co 1 gối, chân kia duỗi thẳng',
-      'Siết mông → nâng hông lên, giữ hông cân bằng',
-      'Giữ đỉnh 2 giây, từ từ hạ xuống',
-      'Làm đủ reps 1 bên rồi đổi chân'
+      'Lie on back, one knee bent, other leg extended straight',
+      'Squeeze glutes → lift hips, keep hips level (no tilting)',
+      'Hold peak 2 seconds, lower slowly',
+      'Complete reps on one side then switch legs'
     ]
   },
   'clamshell': {
     id: 'clamshell',
     name: 'Clamshell',
-    nameVi: 'Mở vỏ sò',
     phase: 'strengthening',
     duration: 50,
     reps: 15,
     type: 'rep-each-side',
     pose: 'side-lying',
     movement: 'hip-abduction',
-    target: 'Gluteus medius (mông bên)',
+    target: 'Gluteus medius (side glutes)',
     instructions: [
-      'Nằm nghiêng, co gối 45°, chân chồng lên nhau',
-      'Giữ gót chân chạm nhau → mở gối trên lên như vỏ sò',
-      'Không xoay hông — giữ hông vuông góc với sàn',
-      'Từ từ hạ xuống. Siết mông khi mở'
+      'Lie on side, knees bent 45°, legs stacked',
+      'Keep heels together → open top knee like a clamshell',
+      'Do not rotate hips — keep hips perpendicular to floor',
+      'Lower slowly. Squeeze glutes at the top'
     ]
   },
   'prone-y': {
     id: 'prone-y',
     name: 'Prone Y Raise',
-    nameVi: 'Nâng tay chữ Y',
     phase: 'strengthening',
     duration: 40,
     reps: 10,
     type: 'rep',
     pose: 'prone',
     movement: 'scapular-retraction',
-    target: 'Lower traps, Rhomboids (lưng giữa)',
+    target: 'Lower traps, Rhomboids (mid-back)',
     instructions: [
-      'Nằm sấp, trán chạm sàn, tay duỗi thẳng tạo chữ Y',
-      'Từ từ nâng ngực và tay khỏi sàn vài cm',
-      'Siết bả vai lại với nhau ở đỉnh, giữ 2 giây',
-      'Hạ từ từ. Kiểm soát — không dùng đà'
+      'Lie face down, forehead on floor, arms extended in Y shape',
+      'Slowly lift chest and arms a few inches off floor',
+      'Squeeze shoulder blades together at top, hold 2 seconds',
+      'Lower with control — no momentum'
     ]
   },
   'chin-tuck': {
     id: 'chin-tuck',
     name: 'Chin Tuck',
-    nameVi: 'Thu cằm',
     phase: 'strengthening',
     duration: 30,
     reps: 10,
     type: 'rep',
     pose: 'standing',
     movement: 'cervical-retraction',
-    target: 'Deep neck flexors (cơ gập cổ sâu)',
+    target: 'Deep neck flexors',
     instructions: [
-      'Đứng hoặc ngồi thẳng lưng',
-      'Thu cằm về sau tạo "double-chin", mắt nhìn thẳng',
-      'Giữ 3 giây — cảm nhận căng sau gáy',
-      'Thả lỏng. Không cúi đầu xuống'
+      'Stand or sit with straight back',
+      'Tuck chin back creating a "double-chin", eyes forward',
+      'Hold 3 seconds — feel stretch at back of neck',
+      'Release. Do not tilt head down'
     ]
   },
   'bird-dog': {
     id: 'bird-dog',
     name: 'Bird Dog',
-    nameVi: 'Chim - Chó',
     phase: 'strengthening',
     duration: 50,
     reps: 6,
     type: 'rep-each-side',
     pose: 'all-fours',
     movement: 'contralateral-extend',
-    target: 'Core, Glutes, Ổn định vai',
+    target: 'Core, Glutes, Shoulder stability',
     instructions: [
-      'Quỳ 4 điểm, lưng thẳng, core siết',
-      'Duỗi tay phải thẳng trước + chân trái thẳng sau',
-      'Giữ 3 giây — KHÔNG nghiêng hông hay xoay thân',
-      'Trở về giữa → đổi bên. Chậm và kiểm soát'
+      'Start on all fours, back flat, core engaged',
+      'Extend right arm forward + left leg back',
+      'Hold 3 seconds — do NOT tilt hips or rotate torso',
+      'Return to center → switch sides. Slow and controlled'
     ]
   },
 
@@ -193,7 +185,6 @@ const EXERCISES = {
   'hip-flexor-stretch': {
     id: 'hip-flexor-stretch',
     name: 'Hip Flexor Stretch',
-    nameVi: 'Kéo giãn cơ gập hông',
     phase: 'stretching',
     duration: 90,
     reps: null,
@@ -202,34 +193,32 @@ const EXERCISES = {
     movement: 'static-hold',
     target: 'Iliopsoas, Rectus femoris',
     instructions: [
-      'Quỳ 1 gối, chân kia bước lên trước gối tạo góc 90°',
-      'Siết mông bên quỳ → đẩy hông về trước',
-      'Cảm nhận căng mặt trước đùi bên quỳ',
-      'Giữ 30-45 giây mỗi bên. Thở đều, không nín thở'
+      'Kneel on one knee, other foot forward with knee at 90°',
+      'Squeeze glute on kneeling side → push hips forward',
+      'Feel stretch in front of thigh on kneeling side',
+      'Hold 30-45 sec each side. Breathe steadily, do not hold breath'
     ]
   },
   'hamstring-stretch': {
     id: 'hamstring-stretch',
     name: 'Hamstring Stretch',
-    nameVi: 'Kéo giãn gân kheo',
     phase: 'stretching',
     duration: 90,
     reps: null,
     type: 'hold',
     pose: 'seated',
     movement: 'static-hold',
-    target: 'Hamstrings (đùi sau)',
+    target: 'Hamstrings (back of thighs)',
     instructions: [
-      'Ngồi duỗi thẳng 1 chân, chân kia co lòng bàn chân áp đùi trong',
-      'Từ từ cúi người về phía chân duỗi, giữ lưng thẳng',
-      'Cảm nhận căng mặt sau đùi — không đau',
-      'Giữ 30-45 giây mỗi bên, thở đều'
+      'Sit with one leg extended straight, other foot against inner thigh',
+      'Slowly fold forward toward extended leg, keep back straight',
+      'Feel stretch in back of thigh — not pain',
+      'Hold 30-45 sec each side, breathe deeply'
     ]
   },
   'pec-stretch': {
     id: 'pec-stretch',
     name: 'Doorway Pec Stretch',
-    nameVi: 'Kéo giãn cơ ngực',
     phase: 'stretching',
     duration: 60,
     reps: null,
@@ -238,16 +227,15 @@ const EXERCISES = {
     movement: 'static-hold',
     target: 'Pectoralis major & minor',
     instructions: [
-      'Đứng ở khung cửa, 2 tay đặt 2 bên khung ngang vai',
-      'Bước 1 chân tới trước, giữ thân thẳng',
-      'Cảm nhận căng ngực trước và vai',
-      'Giữ 45 giây, thở đều'
+      'Stand in doorway, hands on frame at shoulder height',
+      'Step one foot forward, keep torso upright',
+      'Feel stretch across chest and front of shoulders',
+      'Hold 45 sec, breathe deeply'
     ]
   },
   'upper-trap-stretch': {
     id: 'upper-trap-stretch',
     name: 'Upper Trap Stretch',
-    nameVi: 'Kéo giãn cơ thang trên',
     phase: 'stretching',
     duration: 60,
     reps: null,
@@ -256,46 +244,44 @@ const EXERCISES = {
     movement: 'static-hold',
     target: 'Upper trapezius, Levator scapulae',
     instructions: [
-      'Ngồi thẳng, tay phải nắm cạnh ghế',
-      'Nghiêng đầu sang trái, nhẹ nhàng kéo',
-      'Cảm nhận căng bên phải cổ — vai',
-      'Giữ 30 giây mỗi bên. Không giật hay nảy'
+      'Sit tall, right hand gripping chair edge for anchor',
+      'Tilt head left, gently pull with left hand',
+      'Feel stretch on right side of neck and shoulder',
+      'Hold 30 sec each side. No bouncing or jerking'
     ]
   },
   'downward-dog': {
     id: 'downward-dog',
     name: 'Downward-Facing Dog',
-    nameVi: 'Chó úp mặt',
     phase: 'stretching',
     duration: 60,
     reps: null,
     type: 'hold',
     pose: 'inverted',
     movement: 'static-hold',
-    target: 'Toàn thân sau, Bắp chân, Vai',
+    target: 'Full posterior chain, Calves, Shoulders',
     instructions: [
-      'Bắt đầu ở tư thế quỳ 4 điểm',
-      'Đẩy hông lên cao, duỗi thẳng chân hết mức có thể',
-      'Tay ấn sàn, đầu thả lỏng giữa 2 tay',
-      'Giữ 45-60 giây. "Đạp" gót chân luân phiên nếu căng'
+      'Start on all fours',
+      'Push hips up high, straighten legs as much as possible',
+      'Press hands into floor, relax head between arms',
+      'Hold 45-60 sec. Pedal heels alternately if tight'
     ]
   },
   'childs-pose': {
     id: 'childs-pose',
     name: "Child's Pose",
-    nameVi: 'Em bé',
     phase: 'stretching',
     duration: 120,
     reps: null,
     type: 'hold',
     pose: 'kneeling',
     movement: 'static-hold',
-    target: 'Lưng dưới, Hông, Vai',
+    target: 'Lower back, Hips, Shoulders',
     instructions: [
-      'Quỳ trên sàn, gối rộng bằng hông',
-      'Gập người về trước, trán chạm sàn, tay duỗi thẳng',
-      'Thở sâu, thả lỏng toàn thân',
-      'Giữ 90 giây. Cảm nhận lưng và hông được giải phóng'
+      'Kneel on floor, knees hip-width apart',
+      'Fold forward, forehead to floor, arms extended forward',
+      'Breathe deeply, relax entire body',
+      'Hold 90 sec. Feel back and hips release completely'
     ]
   },
 
@@ -303,37 +289,35 @@ const EXERCISES = {
   'wall-angel': {
     id: 'wall-angel',
     name: 'Wall Angel',
-    nameVi: 'Thiên thần tường',
     phase: 'neural',
     duration: 90,
     reps: 10,
     type: 'rep',
     pose: 'standing',
     movement: 'scapular-glide',
-    target: 'Lower traps, Cột sống ngực, Tư thế',
+    target: 'Lower traps, Thoracic spine, Posture',
     instructions: [
-      'Đứng dựa tường: gót-mông-vai-đầu chạm tường',
-      'Tay gập khuỷu 90°, mu bàn tay áp tường ngang vai',
-      'Trượt tay lên dọc tường, giữ khuỷu và mu tay CHẠM TƯỜNG',
-      'Hạ từ từ về vị trí ban đầu. 10 reps chậm'
+      'Stand against wall: heels-glutes-shoulders-head touching wall',
+      'Bend elbows 90°, backs of hands against wall at shoulder height',
+      'Slide arms up wall, keeping elbows and hands TOUCHING WALL',
+      'Lower slowly. 10 slow reps'
     ]
   },
   'wall-posture': {
     id: 'wall-posture',
     name: 'Wall Posture Hold',
-    nameVi: 'Giữ tư thế tường',
     phase: 'neural',
     duration: 60,
     reps: null,
     type: 'hold',
     pose: 'standing',
     movement: 'static-hold',
-    target: 'Toàn thân, Reset thần kinh tư thế',
+    target: 'Full body, Posture neural reset',
     instructions: [
-      'Đứng dựa tường: gót-mông-vai-đầu chạm tường',
-      'Cằm thu nhẹ, mắt nhìn thẳng, thả lỏng vai',
-      'Hít thở sâu, cảm nhận tư thế thẳng tự nhiên',
-      'Giữ 60 giây. Ghi nhớ cảm giác này — đó là tư thế đúng'
+      'Stand against wall: heels-glutes-shoulders-head touching wall',
+      'Slight chin tuck, eyes forward, relax shoulders',
+      'Breathe deeply, feel natural upright posture',
+      'Hold 60 sec. Memorize this feeling — this is correct posture'
     ]
   }
 };
@@ -341,46 +325,46 @@ const EXERCISES = {
 // ── SCHEDULE: which exercises per day ───────────────────────────
 const SCHEDULE = {
   monday: {
-    name: 'Thứ 2 - Full Reset',
+    name: 'Monday - Full Routine',
     icon: '💪',
     phases: buildPhases()
   },
   tuesday: {
-    name: 'Thứ 3 - Full Reset',
+    name: 'Tuesday - Full Routine',
     icon: '🔥',
     phases: buildPhases()
   },
   wednesday: {
-    name: 'Thứ 4 - Full Reset',
+    name: 'Wednesday - Full Routine',
     icon: '⚡',
     phases: buildPhases()
   },
   thursday: {
-    name: 'Thứ 5 - Full Reset',
+    name: 'Thursday - Full Routine',
     icon: '🔄',
     phases: buildPhases()
   },
   friday: {
-    name: 'Thứ 6 - Full Reset',
+    name: 'Friday - Full Routine',
     icon: '🎯',
     phases: buildPhases()
   },
   saturday: {
-    name: 'Thứ 7 - Full + Cardio',
+    name: 'Saturday - Full + Cardio',
     icon: '🌟',
     phases: buildPhases(),
-    bonus: 'Thêm 20 phút đi bộ nhanh hoặc bơi 🏊‍♂️🏃'
+    bonus: 'Bonus: 20 min brisk walk or swim 🏊‍♂️🏃'
   },
   sunday: {
-    name: 'Chủ nhật - Nghỉ',
+    name: 'Sunday - Rest Day',
     icon: '🧘',
     phases: [
       {
-        name: 'Yoga nhẹ hoặc Nghỉ ngơi',
-        nameEn: 'Light Yoga / Rest',
+        name: 'Light Yoga or Rest',
+        nameEn: 'Recovery',
         color: '#a78bfa',
         duration: 1800,
-        exercises: ['childs-pose'] // just relax
+        exercises: ['childs-pose']
       }
     ],
     isRest: true
@@ -391,42 +375,42 @@ function buildPhases() {
   const s = ['single-leg-bridge', 'clamshell', 'prone-y', 'chin-tuck', 'bird-dog'];
   return [
     {
-      name: 'Khởi động & Kích hoạt',
-      nameEn: 'Warm-Up & Activation',
+      name: 'Warm-Up & Activation',
+      nameEn: 'Warm-Up',
       color: '#ff6b6b',
       duration: 300,
       exercises: ['cat-cow', 'glute-bridge', 'dead-bug']
     },
     {
-      name: 'Tăng cường cơ yếu (Vòng 1/3)',
-      nameEn: 'Strengthening C1',
+      name: 'Strengthening (Circuit 1/3)',
+      nameEn: 'Strength C1',
       color: '#4ecdc4',
       duration: 240,
       exercises: [...s]
     },
     {
-      name: 'Tăng cường cơ yếu (Vòng 2/3)',
-      nameEn: 'Strengthening C2',
+      name: 'Strengthening (Circuit 2/3)',
+      nameEn: 'Strength C2',
       color: '#4ecdc4',
       duration: 240,
       exercises: [...s]
     },
     {
-      name: 'Tăng cường cơ yếu (Vòng 3/3)',
-      nameEn: 'Strengthening C3',
+      name: 'Strengthening (Circuit 3/3)',
+      nameEn: 'Strength C3',
       color: '#4ecdc4',
       duration: 240,
       exercises: [...s]
     },
     {
-      name: 'Kéo giãn cơ căng',
+      name: 'Stretching',
       nameEn: 'Stretching',
       color: '#ffe66d',
       duration: 600,
       exercises: ['hip-flexor-stretch', 'hamstring-stretch', 'pec-stretch', 'upper-trap-stretch', 'downward-dog', 'childs-pose']
     },
     {
-      name: 'Reset thần kinh & Tư thế',
+      name: 'Neural Reset & Posture',
       nameEn: 'Neural Reset',
       color: '#a78bfa',
       duration: 180,
@@ -649,10 +633,10 @@ class UIController {
       if (!this.session) return;
       if (this.session.timer.paused) {
         this.session.resume();
-        this.$btnPause.textContent = '⏸ Tạm dừng';
+        this.$btnPause.textContent = '⏸ Pause';
       } else {
         this.session.pause();
-        this.$btnPause.textContent = '▶ Tiếp tục';
+        this.$btnPause.textContent = '▶ Resume';
       }
     });
 
@@ -675,10 +659,10 @@ class UIController {
         e.preventDefault();
         if (this.session.timer.paused) {
           this.session.resume();
-          this.$btnPause.textContent = '⏸ Tạm dừng';
+          this.$btnPause.textContent = '⏸ Pause';
         } else {
           this.session.pause();
-          this.$btnPause.textContent = '▶ Tiếp tục';
+          this.$btnPause.textContent = '▶ Resume';
         }
       }
       if (e.code === 'ArrowRight') {
@@ -717,7 +701,7 @@ class UIController {
             return `
               <div class="ex-row">
                 <span class="ex-num">${i + 1}</span>
-                <span class="ex-name">${ex.nameVi}</span>
+                <span class="ex-name">${ex.name}</span>
                 <span class="ex-meta">${repStr} · ${ex.duration}s</span>
               </div>`;
           }).join('')}
@@ -761,7 +745,7 @@ class UIController {
   startWorkout() {
     const day = SCHEDULE[this.selectedDay];
     if (!day || day.isRest) {
-      this.$completeMsg.innerHTML = '<h2>🧘 Hôm nay nghỉ ngơi nhé!</h2><p>Chủ nhật là ngày để cơ thể phục hồi. Đi dạo, yoga nhẹ, hoặc đơn giản là thư giãn.</p>';
+      this.$completeMsg.innerHTML = '<h2>🧘 Rest day — enjoy it!</h2><p>Sunday is for recovery. Light walk, yoga, or just relax. Your body needs it.</p>';
       this.showComplete();
       return;
     }
@@ -790,9 +774,9 @@ class UIController {
     };
     this.session.onComplete = () => {
       this.$completeMsg.innerHTML = `
-        <h2>🎉 Xong! Tuyệt vời!</h2>
-        <p>Bạn vừa hoàn thành 30 phút reset cơ thể. Hãy duy trì mỗi ngày để thấy sự khác biệt.</p>
-        <p style="color: #94a3b8; margin-top: 8px;">${flat.length} bài tập · ${Math.floor(flat.reduce((s, e) => s + e.duration, 0) / 60)} phút</p>
+        <h2>🎉 Done! Great work!</h2>
+        <p>You just completed a 30-minute body reset. Stay consistent — your body will thank you.</p>
+        <p style="color: #94a3b8; margin-top: 8px;">${flat.length} exercises · ${Math.floor(flat.reduce((s, e) => s + e.duration, 0) / 60)} min</p>
       `;
       this.showComplete();
     };
@@ -806,7 +790,7 @@ class UIController {
 
     // Header
     this.$exIndex.textContent = `${exerciseIdx + 1}/${totalExercises}`;
-    this.$exName.textContent = exercise.nameVi;
+    this.$exName.textContent = exercise.name;
     this.$exTarget.textContent = exercise.target;
 
     // Instructions
@@ -873,7 +857,7 @@ class UIController {
     const svg = document.createElementNS(svgNS, 'svg');
     svg.setAttribute('viewBox', cfg.viewBox);
     svg.classList.add('figure-svg');
-    cfg.draw(svg, exercise);
+    cfg.draw.call(this, svg, exercise);
 
     this.$exFigure.innerHTML = '';
     this.$exFigure.appendChild(svg);
