@@ -45,6 +45,7 @@ const EXERCISES = {
   'cat-cow': {
     id: 'cat-cow',
     name: 'Cat-Cow',
+    videoId: 'WHUevrqeKIg',
     phase: 'warmup',
     duration: 90,
     reps: 10,
@@ -62,6 +63,7 @@ const EXERCISES = {
   'glute-bridge': {
     id: 'glute-bridge',
     name: 'Glute Bridge',
+    videoId: 'R1OXPHRqehw',
     phase: 'warmup',
     duration: 90,
     reps: 12,
@@ -79,6 +81,7 @@ const EXERCISES = {
   'dead-bug': {
     id: 'dead-bug',
     name: 'Dead Bug',
+    videoId: 'xtTIb6dC-vI',
     phase: 'warmup',
     duration: 90,
     reps: 8,
@@ -98,6 +101,7 @@ const EXERCISES = {
   'single-leg-bridge': {
     id: 'single-leg-bridge',
     name: 'Single-Leg Bridge',
+    videoId: '2sg3vqnE8qE',
     phase: 'strengthening',
     duration: 60,
     reps: 10,
@@ -115,6 +119,7 @@ const EXERCISES = {
   'clamshell': {
     id: 'clamshell',
     name: 'Clamshell',
+    videoId: 'lp-VUWbFrYg',
     phase: 'strengthening',
     duration: 50,
     reps: 15,
@@ -132,6 +137,7 @@ const EXERCISES = {
   'prone-y': {
     id: 'prone-y',
     name: 'Prone Y Raise',
+    videoId: 'E5Mj7LCvmmE',
     phase: 'strengthening',
     duration: 40,
     reps: 10,
@@ -149,6 +155,7 @@ const EXERCISES = {
   'chin-tuck': {
     id: 'chin-tuck',
     name: 'Chin Tuck',
+    videoId: 'HBjR_xEYd-4',
     phase: 'strengthening',
     duration: 30,
     reps: 10,
@@ -166,6 +173,7 @@ const EXERCISES = {
   'bird-dog': {
     id: 'bird-dog',
     name: 'Bird Dog',
+    videoId: 'xEDnlOxeJH4',
     phase: 'strengthening',
     duration: 50,
     reps: 6,
@@ -185,6 +193,7 @@ const EXERCISES = {
   'hip-flexor-stretch': {
     id: 'hip-flexor-stretch',
     name: 'Hip Flexor Stretch',
+    videoId: '_vrztIsfMvM',
     phase: 'stretching',
     duration: 90,
     reps: null,
@@ -202,6 +211,7 @@ const EXERCISES = {
   'hamstring-stretch': {
     id: 'hamstring-stretch',
     name: 'Hamstring Stretch',
+    videoId: 'iPD_nUSdJ6o',
     phase: 'stretching',
     duration: 90,
     reps: null,
@@ -219,6 +229,7 @@ const EXERCISES = {
   'pec-stretch': {
     id: 'pec-stretch',
     name: 'Doorway Pec Stretch',
+    videoId: 'h4M4XmCBFd8',
     phase: 'stretching',
     duration: 60,
     reps: null,
@@ -236,6 +247,7 @@ const EXERCISES = {
   'upper-trap-stretch': {
     id: 'upper-trap-stretch',
     name: 'Upper Trap Stretch',
+    videoId: '-r0eoFS7_5Q',
     phase: 'stretching',
     duration: 60,
     reps: null,
@@ -253,6 +265,7 @@ const EXERCISES = {
   'downward-dog': {
     id: 'downward-dog',
     name: 'Downward-Facing Dog',
+    videoId: 'YqOqM79McYY',
     phase: 'stretching',
     duration: 60,
     reps: null,
@@ -270,6 +283,7 @@ const EXERCISES = {
   'childs-pose': {
     id: 'childs-pose',
     name: "Child's Pose",
+    videoId: 'Y8oxXUwAxks',
     phase: 'stretching',
     duration: 120,
     reps: null,
@@ -289,6 +303,7 @@ const EXERCISES = {
   'wall-angel': {
     id: 'wall-angel',
     name: 'Wall Angel',
+    videoId: 'cvx06snMQ3A',
     phase: 'neural',
     duration: 90,
     reps: 10,
@@ -306,6 +321,7 @@ const EXERCISES = {
   'wall-posture': {
     id: 'wall-posture',
     name: 'Wall Posture Hold',
+    videoId: 'cvx06snMQ3A',
     phase: 'neural',
     duration: 60,
     reps: null,
@@ -712,7 +728,7 @@ class UIController {
     // Bonus note for Saturday
     if (day.bonus) {
       this.$bonusNote.style.display = 'block';
-      this.$bonusNote.textContent = '🌟 ' + day.bonus;
+      this.$bonusNote.textContent = day.bonus;
     } else {
       this.$bonusNote.style.display = 'none';
     }
@@ -840,6 +856,23 @@ class UIController {
   }
 
   _renderFigure(exercise) {
+    this.$exFigure.innerHTML = '';
+
+    if (exercise.videoId) {
+      const wrapper = document.createElement('div');
+      wrapper.className = 'video-wrapper';
+      wrapper.innerHTML = `<iframe
+        src="https://www.youtube.com/embed/${exercise.videoId}?rel=0&modestbranding=1&showinfo=0"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+        loading="lazy"
+        title="${exercise.name} demonstration"
+      ></iframe>`;
+      this.$exFigure.appendChild(wrapper);
+      return;
+    }
+
     const poses = {
       'all-fours': { viewBox: '0 0 140 140', draw: this._drawAllFours },
       'lying-supine': { viewBox: '0 0 140 100', draw: this._drawLyingSupine },
@@ -858,8 +891,6 @@ class UIController {
     svg.setAttribute('viewBox', cfg.viewBox);
     svg.classList.add('figure-svg');
     cfg.draw.call(this, svg, exercise);
-
-    this.$exFigure.innerHTML = '';
     this.$exFigure.appendChild(svg);
   }
 
