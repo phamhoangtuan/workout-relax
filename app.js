@@ -859,17 +859,26 @@ class UIController {
     this.$exFigure.innerHTML = '';
 
     if (exercise.videoId) {
-      const wrapper = document.createElement('div');
-      wrapper.className = 'video-wrapper';
-      wrapper.innerHTML = `<iframe
-        src="https://www.youtube.com/embed/${exercise.videoId}?rel=0&modestbranding=1&showinfo=0"
-        frameborder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen
-        loading="lazy"
-        title="${exercise.name} demonstration"
-      ></iframe>`;
-      this.$exFigure.appendChild(wrapper);
+      const link = document.createElement('a');
+      link.href = `https://www.youtube.com/watch?v=${exercise.videoId}`;
+      link.target = '_blank';
+      link.rel = 'noopener';
+      link.className = 'video-thumb-link';
+      link.title = `Watch ${exercise.name} demo on YouTube`;
+
+      const img = document.createElement('img');
+      img.src = `https://img.youtube.com/vi/${exercise.videoId}/hqdefault.jpg`;
+      img.alt = exercise.name;
+      img.className = 'video-thumb';
+      img.loading = 'lazy';
+
+      const play = document.createElement('span');
+      play.className = 'play-overlay';
+      play.textContent = '▶';
+
+      link.appendChild(img);
+      link.appendChild(play);
+      this.$exFigure.appendChild(link);
       return;
     }
 
@@ -1066,8 +1075,8 @@ class UIController {
 document.addEventListener('DOMContentLoaded', () => {
   if (window.location.protocol === 'file:') {
     const banner = document.createElement('div');
-    banner.style.cssText = 'background:#ff6b6b;color:#0b0b12;text-align:center;padding:12px 16px;font-weight:700;font-size:0.85rem;margin-bottom:16px;border-radius:8px;';
-    banner.innerHTML = '⚠️ Opened from <code>file://</code> — YouTube videos blocked.<br>Run <code>python3 -m http.server 8080</code> in this folder, then open <a href="http://localhost:8080" style="color:#0b0b12;text-decoration:underline;">http://localhost:8080</a><br>Or use the live site: <a href="https://phamhoangtuan.github.io/workout-relax/" style="color:#0b0b12;text-decoration:underline;">phamhoangtuan.github.io/workout-relax</a>';
+    banner.style.cssText = 'background:#1e293b;color:#e2e8f0;text-align:center;padding:10px 16px;font-size:0.8rem;margin-bottom:16px;border-radius:8px;border:1px solid #334155;';
+    banner.innerHTML = '💡 For best experience (audio beeps): run <code style="background:#334155;padding:1px 6px;border-radius:4px;">python3 -m http.server 8080</code> → <a href="http://localhost:8080" style="color:#4ecdc4;">localhost:8080</a> · Live: <a href="https://phamhoangtuan.github.io/workout-relax/" style="color:#4ecdc4;">GitHub Pages</a>';
     document.getElementById('app').insertBefore(banner, document.getElementById('app').firstChild);
   }
 
