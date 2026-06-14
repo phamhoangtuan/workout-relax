@@ -1,0 +1,510 @@
+/* ================================================================
+   VĂN PHÒNG RESET - Styles
+   Dark fitness theme, mobile-first, responsive
+   ================================================================ */
+
+/* ── RESET & BASE ─────────────────────────────────────────────── */
+*,
+*::before,
+*::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #0b0b12;
+  --bg-card: #151525;
+  --bg-card-hover: #1e1e35;
+  --bg-surface: #1a1a30;
+  --text: #e2e8f0;
+  --text-dim: #94a3b8;
+  --text-muted: #64748b;
+  --border: #1e293b;
+  --red: #ff6b6b;
+  --teal: #4ecdc4;
+  --yellow: #ffe66d;
+  --purple: #a78bfa;
+  --success: #2ecc71;
+  --radius: 12px;
+  --radius-sm: 8px;
+  --transition: 0.2s ease;
+}
+
+html { font-size: 16px; scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+body.workout-active { background: #06060e; }
+
+.hidden { display: none !important; }
+
+/* ── HEADER ───────────────────────────────────────────────────── */
+.header {
+  text-align: center;
+  padding: 32px 16px 24px;
+}
+
+.header h1 {
+  font-size: 1.75rem;
+  font-weight: 900;
+  letter-spacing: -0.5px;
+  background: linear-gradient(135deg, var(--red), var(--purple));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.subtitle {
+  color: var(--text-dim);
+  font-size: 0.875rem;
+  margin-top: 4px;
+}
+
+/* ── DAY SELECTOR ─────────────────────────────────────────────── */
+.day-selector {
+  display: flex;
+  gap: 4px;
+  padding: 0 12px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.day-selector::-webkit-scrollbar { display: none; }
+
+.day-btn {
+  flex: 0 0 auto;
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-card);
+  color: var(--text-dim);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition);
+  white-space: nowrap;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  min-width: 58px;
+}
+
+.day-btn:hover {
+  background: var(--bg-card-hover);
+  color: var(--text);
+}
+
+.day-btn.active {
+  background: var(--teal);
+  color: #0b0b12;
+  border-color: var(--teal);
+  box-shadow: 0 0 20px rgba(78, 205, 196, 0.3);
+}
+
+.day-btn .day-icon { font-size: 1.1rem; }
+
+/* ── MAIN CONTAINER ───────────────────────────────────────────── */
+#app {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 0 12px 40px;
+}
+
+/* ── SCHEDULE VIEW ────────────────────────────────────────────── */
+.phase-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.phase-card {
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  border-left: 3px solid;
+  overflow: hidden;
+  transition: transform var(--transition);
+}
+
+.phase-card:hover { transform: translateX(2px); }
+
+.phase-card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+}
+
+.phase-badge {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: #0b0b12;
+  flex-shrink: 0;
+}
+
+.phase-card-header h3 {
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.phase-duration {
+  font-size: 0.75rem;
+  color: var(--text-dim);
+}
+
+.phase-exercises {
+  border-top: 1px solid var(--border);
+  padding: 8px 16px 12px;
+}
+
+.ex-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 0;
+  font-size: 0.85rem;
+}
+
+.ex-num {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--bg-surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--text-dim);
+  flex-shrink: 0;
+}
+
+.ex-name { flex: 1; font-weight: 500; }
+.ex-meta { color: var(--text-muted); font-size: 0.75rem; }
+
+/* ── BONUS NOTE ───────────────────────────────────────────────── */
+.bonus-note {
+  margin-top: 12px;
+  padding: 14px 16px;
+  background: linear-gradient(135deg, rgba(255, 230, 109, 0.1), rgba(78, 205, 196, 0.1));
+  border: 1px solid rgba(255, 230, 109, 0.2);
+  border-radius: var(--radius);
+  color: var(--yellow);
+  font-size: 0.85rem;
+  font-weight: 500;
+  display: none;
+}
+
+/* ── START BUTTON ─────────────────────────────────────────────── */
+.btn-start {
+  display: block;
+  width: 100%;
+  margin-top: 24px;
+  padding: 16px 24px;
+  border: none;
+  border-radius: var(--radius);
+  background: linear-gradient(135deg, var(--red), #e74c3c);
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all var(--transition);
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 20px rgba(255, 107, 107, 0.3);
+}
+
+.btn-start:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 30px rgba(255, 107, 107, 0.4);
+}
+
+.btn-start:active { transform: translateY(0); }
+
+/* ── WORKOUT VIEW ─────────────────────────────────────────────── */
+#workout-view {
+  margin-top: 12px;
+}
+
+/* Phase banner */
+.phase-banner {
+  text-align: center;
+  padding: 10px 16px;
+  border-radius: var(--radius-sm);
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #0b0b12;
+  margin-bottom: 16px;
+  transition: background 0.3s ease;
+}
+
+/* Progress bar */
+.progress-bar-wrap {
+  height: 4px;
+  background: var(--border);
+  border-radius: 2px;
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: var(--teal);
+  border-radius: 2px;
+  transition: width 0.3s ease;
+}
+
+/* Exercise card */
+.exercise-card {
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.ex-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.ex-index {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.ex-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin: 4px 0 2px;
+}
+
+.ex-target {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+}
+
+/* Figure container */
+.figure-container {
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+}
+
+.figure-svg {
+  width: 180px;
+  height: 180px;
+  overflow: visible;
+}
+
+.figure-svg .head { fill: none; stroke: var(--text); stroke-width: 2.5; }
+.figure-svg .limb { stroke: var(--text-dim); stroke-width: 2.5; stroke-linecap: round; }
+.figure-svg .joint { fill: var(--text); }
+.figure-svg .floor { stroke: var(--border); stroke-width: 1; stroke-dasharray: 4 4; }
+.figure-svg .wall { stroke: var(--text-muted); stroke-width: 2; stroke-dasharray: 6 4; }
+
+/* Reps indicator */
+.ex-reps {
+  text-align: center;
+  padding: 8px 16px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--teal);
+  border-bottom: 1px solid var(--border);
+}
+
+/* Instructions */
+.ex-instructions {
+  padding: 16px;
+}
+
+.ex-instructions li {
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  margin-bottom: 8px;
+  padding-left: 8px;
+  list-style-position: inside;
+}
+
+.ex-instructions li::marker { color: var(--teal); font-weight: 700; }
+
+/* Timer */
+.timer-section {
+  padding: 20px 16px;
+  text-align: center;
+}
+
+.timer-clock {
+  font-size: 4rem;
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -2px;
+  color: var(--text);
+  transition: color 0.3s ease;
+}
+
+.timer-clock.timer-warn {
+  color: var(--red);
+  animation: timerPulse 0.5s ease-in-out infinite;
+}
+
+.timer-clock.timer-paused {
+  opacity: 0.5;
+}
+
+.timer-bar-wrap {
+  height: 6px;
+  background: var(--border);
+  border-radius: 3px;
+  margin-top: 12px;
+  overflow: hidden;
+}
+
+.timer-bar-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.05s linear;
+}
+
+/* Controls */
+.workout-controls {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+  padding-bottom: 20px;
+}
+
+.btn-pause,
+.btn-skip {
+  flex: 1;
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-surface);
+  color: var(--text);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition);
+}
+
+.btn-pause:hover,
+.btn-skip:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--text-muted);
+}
+
+.btn-skip { color: var(--text-dim); }
+
+.shortcut-hint {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.7rem;
+  padding-bottom: 12px;
+}
+
+.shortcut-hint kbd {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1px 6px;
+  font-size: 0.7rem;
+  font-family: inherit;
+}
+
+/* ── COMPLETE VIEW ────────────────────────────────────────────── */
+#complete-view {
+  text-align: center;
+  padding: 40px 16px;
+}
+
+.complete-icon {
+  font-size: 4rem;
+  margin-bottom: 16px;
+  animation: bounceIn 0.6s ease;
+}
+
+#complete-view h2 {
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+
+#complete-view p {
+  color: var(--text-dim);
+  font-size: 0.9rem;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.btn-back {
+  display: inline-block;
+  margin-top: 24px;
+  padding: 12px 28px;
+  border: none;
+  border-radius: var(--radius);
+  background: var(--teal);
+  color: #0b0b12;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all var(--transition);
+}
+
+.btn-back:hover { opacity: 0.9; transform: translateY(-1px); }
+
+/* ── ANIMATIONS ───────────────────────────────────────────────── */
+@keyframes timerPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+@keyframes bounceIn {
+  0% { transform: scale(0); opacity: 0; }
+  60% { transform: scale(1.2); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* Figure animations — subtle breathing effect for static poses */
+.figure-svg .fig-allfours { animation: subtleBob 3s ease-in-out infinite; }
+.figure-svg .fig-standing { animation: subtleBob 4s ease-in-out infinite; }
+.figure-svg .fig-lying { animation: subtleBob 3.5s ease-in-out infinite; }
+.figure-svg .fig-sidelying { animation: subtleBob 3s ease-in-out infinite; }
+.figure-svg .fig-prone { animation: subtleBob 3.5s ease-in-out infinite; }
+.figure-svg .fig-halfkneel { animation: subtleBob 3s ease-in-out infinite; }
+.figure-svg .fig-seated { animation: subtleBob 3s ease-in-out infinite; }
+.figure-svg .fig-inverted { animation: subtleBob 3s ease-in-out infinite; }
+.figure-svg .fig-kneeling { animation: subtleBob 3s ease-in-out infinite; }
+
+@keyframes subtleBob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-2px); }
+}
+
+/* ── RESPONSIVE ───────────────────────────────────────────────── */
+@media (max-width: 400px) {
+  .header h1 { font-size: 1.4rem; }
+  .timer-clock { font-size: 3rem; }
+  .ex-title { font-size: 1rem; }
+}
+
+@media (min-width: 768px) {
+  #app { padding: 0 20px 60px; }
+  .day-selector { justify-content: center; }
+  .day-btn { padding: 12px 18px; font-size: 0.85rem; }
+}

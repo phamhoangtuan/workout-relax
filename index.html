@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Văn Phòng Reset — 30 Phút Mỗi Ngày</title>
+  <meta name="description" content="Bài tập 30 phút mỗi ngày cho dân văn phòng — reset cơ thể sau 8 tiếng ngồi">
+  <meta name="theme-color" content="#0b0b12">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="app">
+    <!-- HEADER -->
+    <header class="header">
+      <h1>🪨 Văn Phòng Reset</h1>
+      <p class="subtitle">30 phút mỗi ngày — Reset cơ thể sau 8h ngồi</p>
+    </header>
+
+    <!-- DAY SELECTOR -->
+    <nav class="day-selector" id="day-tabs">
+      <button class="day-btn active" data-day="monday">
+        <span class="day-icon">💪</span> Thứ 2
+      </button>
+      <button class="day-btn" data-day="tuesday">
+        <span class="day-icon">🔥</span> Thứ 3
+      </button>
+      <button class="day-btn" data-day="wednesday">
+        <span class="day-icon">⚡</span> Thứ 4
+      </button>
+      <button class="day-btn" data-day="thursday">
+        <span class="day-icon">🔄</span> Thứ 5
+      </button>
+      <button class="day-btn" data-day="friday">
+        <span class="day-icon">🎯</span> Thứ 6
+      </button>
+      <button class="day-btn" data-day="saturday">
+        <span class="day-icon">🌟</span> Thứ 7
+      </button>
+      <button class="day-btn" data-day="sunday">
+        <span class="day-icon">🧘</span> CN
+      </button>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <main>
+      <!-- SCHEDULE VIEW -->
+      <section id="schedule-view">
+        <div class="phase-list" id="phase-list"></div>
+        <div class="bonus-note" id="bonus-note"></div>
+        <button class="btn-start" id="start-workout">▶ Bắt đầu 30 phút</button>
+      </section>
+
+      <!-- WORKOUT VIEW -->
+      <section id="workout-view" class="hidden">
+        <div class="phase-banner" id="phase-banner"></div>
+
+        <div class="progress-bar-wrap">
+          <div class="progress-bar-fill" id="progress-bar" style="width:0%"></div>
+        </div>
+
+        <div class="exercise-card">
+          <div class="ex-header">
+            <div>
+              <span class="ex-index" id="ex-index"></span>
+              <h2 class="ex-title" id="ex-name"></h2>
+              <span class="ex-target" id="ex-target"></span>
+            </div>
+          </div>
+
+          <div class="figure-container" id="ex-figure"></div>
+
+          <div class="ex-reps" id="ex-reps"></div>
+
+          <ol class="ex-instructions" id="ex-instructions"></ol>
+        </div>
+
+        <div class="timer-section">
+          <div class="timer-clock" id="timer-clock">00:00</div>
+          <div class="timer-bar-wrap">
+            <div class="timer-bar-fill" id="timer-bar" style="width:100%"></div>
+          </div>
+        </div>
+
+        <div class="workout-controls">
+          <button class="btn-pause" id="btn-pause">⏸ Tạm dừng</button>
+          <button class="btn-skip" id="btn-skip">⏭ Bỏ qua</button>
+        </div>
+
+        <div class="shortcut-hint">
+          Phím tắt: <kbd>Space</kbd> Tạm dừng · <kbd>→</kbd> Bỏ qua
+        </div>
+      </section>
+
+      <!-- COMPLETE VIEW -->
+      <section id="complete-view" class="hidden">
+        <div class="complete-icon">🎉</div>
+        <div id="complete-msg"></div>
+        <button class="btn-back" id="btn-back-schedule">← Về lịch tập</button>
+      </section>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
