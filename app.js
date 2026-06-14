@@ -859,12 +859,10 @@ class UIController {
     this.$exFigure.innerHTML = '';
 
     if (exercise.videoId) {
-      const link = document.createElement('a');
-      link.href = `https://www.youtube.com/watch?v=${exercise.videoId}`;
-      link.target = '_blank';
-      link.rel = 'noopener';
-      link.className = 'video-thumb-link';
-      link.title = `Watch ${exercise.name} demo on YouTube`;
+      const container = document.createElement('div');
+      container.className = 'video-thumb-link';
+      container.style.cursor = 'pointer';
+      container.title = `Watch ${exercise.name} demo on YouTube — click to open`;
 
       const img = document.createElement('img');
       img.src = `https://img.youtube.com/vi/${exercise.videoId}/hqdefault.jpg`;
@@ -876,9 +874,21 @@ class UIController {
       play.className = 'play-overlay';
       play.textContent = '▶';
 
-      link.appendChild(img);
-      link.appendChild(play);
-      this.$exFigure.appendChild(link);
+      container.appendChild(img);
+      container.appendChild(play);
+
+      container.addEventListener('click', () => {
+        const win = window.open(
+          `https://www.youtube.com/watch?v=${exercise.videoId}`,
+          '_blank',
+          'noopener,noreferrer'
+        );
+        if (!win || win.closed || typeof win.closed === 'undefined') {
+          alert(`Pop-up blocked! Watch here:\nhttps://www.youtube.com/watch?v=${exercise.videoId}`);
+        }
+      });
+
+      this.$exFigure.appendChild(container);
       return;
     }
 
