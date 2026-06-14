@@ -767,7 +767,7 @@ class WorkoutSession {
     }
     const nextEx = this.exercises[this.currentIdx];
     const prevEx = this.exercises[this.currentIdx - 1];
-    if (nextEx.phaseColor !== prevEx.phaseColor) {
+    if (nextEx.phaseName !== prevEx.phaseName) {
       this.audio.phaseChange();
       this.phaseIdx++;
       if (this.onPhaseChange) this.onPhaseChange(nextEx.phaseName);
