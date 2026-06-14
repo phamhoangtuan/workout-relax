@@ -1070,34 +1070,14 @@ class UIController {
     this.$exFigure.innerHTML = '';
 
     if (exercise.videoId) {
-      const form = document.createElement('form');
-      form.action = `https://www.youtube.com/watch?v=${exercise.videoId}`;
-      form.target = '_blank';
-      form.method = 'GET';
-      form.style.display = 'none';
-
-      const container = document.createElement('div');
-      container.className = 'video-thumb-link';
-      container.style.cursor = 'pointer';
-      container.title = `Watch ${exercise.name} demo on YouTube`;
-
       const img = document.createElement('img');
-      img.src = `https://img.youtube.com/vi/${exercise.videoId}/hqdefault.jpg`;
+      img.src = `assets/thumbs/${exercise.videoId}.jpg`;
       img.alt = exercise.name;
       img.className = 'video-thumb';
       img.loading = 'lazy';
+      img.onerror = function() { this.style.display = 'none'; };
 
-      const play = document.createElement('span');
-      play.className = 'play-overlay';
-      play.textContent = '▶';
-
-      container.appendChild(img);
-      container.appendChild(play);
-      container.appendChild(form);
-
-      container.addEventListener('click', () => form.submit());
-
-      this.$exFigure.appendChild(container);
+      this.$exFigure.appendChild(img);
       return;
     }
 
