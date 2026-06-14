@@ -910,7 +910,7 @@ class UIController {
 
     if (day.isRest) {
       this.$completeMsg.innerHTML = '<h2>🧘 Rest day — enjoy it!</h2><p>Sunday is for recovery. Light walk, yoga, or just relax. Your body needs it.</p>';
-      this.showComplete();
+      this.showComplete(true);
       return;
     }
 
@@ -963,11 +963,12 @@ class UIController {
     document.body.classList.add('workout-active');
   }
 
-  showComplete() {
+  showComplete(hideBack) {
     this.$schedule.classList.add('hidden');
     this.$workout.classList.add('hidden');
     this.$complete.classList.remove('hidden');
     document.body.classList.remove('workout-active');
+    document.getElementById('btn-back-schedule').style.display = hideBack ? 'none' : 'inline-block';
   }
 
   startWorkout() {
