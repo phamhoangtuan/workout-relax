@@ -335,40 +335,203 @@ const EXERCISES = {
       'Breathe deeply, feel natural upright posture',
       'Hold 60 sec. Memorize this feeling — this is correct posture'
     ]
+  },
+  /* ---------- ROUTINE B EXERCISES ---------- */
+  'fire-hydrant': {
+    id: 'fire-hydrant',
+    name: 'Fire Hydrant',
+    videoId: 'IRkRgk2Gc1E',
+    phase: 'warmup',
+    duration: 90,
+    reps: 12,
+    type: 'rep-each-side',
+    pose: 'all-fours',
+    movement: 'hip-abduction-flexed',
+    target: 'Gluteus medius, Gluteus maximus',
+    instructions: [
+      'Start on all fours, hands under shoulders, knees under hips',
+      'Keep knee bent 90°, lift one knee out to the side',
+      'Squeeze glutes at the top, do not rotate hips',
+      'Lower with control. Complete reps then switch sides'
+    ]
+  },
+  'glute-bridge-march': {
+    id: 'glute-bridge-march',
+    name: 'Glute Bridge March',
+    videoId: 'geC0-toofW4',
+    phase: 'warmup',
+    duration: 90,
+    reps: 10,
+    type: 'rep-each-side',
+    pose: 'lying-supine',
+    movement: 'hip-lift-alternating',
+    target: 'Glutes, Core, Hip stability',
+    instructions: [
+      'Lie on back, knees bent, lift hips into bridge position',
+      'Hold bridge — keep hips level, do not let them drop',
+      'March one knee toward chest, then lower',
+      'Alternate legs. Keep hips stable throughout'
+    ]
+  },
+  'donkey-kick': {
+    id: 'donkey-kick',
+    name: 'Donkey Kick',
+    videoId: 'DDJdkNkepLY',
+    phase: 'strengthening',
+    duration: 50,
+    reps: 15,
+    type: 'rep-each-side',
+    pose: 'all-fours',
+    movement: 'hip-extension-flexed',
+    target: 'Gluteus maximus, Hamstrings',
+    instructions: [
+      'Start on all fours, core engaged, back flat',
+      'Keeping knee bent 90°, drive heel toward ceiling',
+      'Squeeze glute at top — do not arch lower back',
+      'Lower with control. Complete reps then switch'
+    ]
+  },
+  'side-lying-leg-lift': {
+    id: 'side-lying-leg-lift',
+    name: 'Side-Lying Leg Lift',
+    videoId: 'g9FtnmsIYgI',
+    phase: 'strengthening',
+    duration: 45,
+    reps: 15,
+    type: 'rep-each-side',
+    pose: 'side-lying',
+    movement: 'hip-abduction-straight',
+    target: 'Gluteus medius, Hip abductors',
+    instructions: [
+      'Lie on side, bottom leg bent for support, top leg straight',
+      'Lift top leg straight up toward ceiling, toes pointing forward',
+      'Keep hips stacked — do not roll backward',
+      'Lower slowly. Complete reps then switch sides'
+    ]
+  },
+  't-raise': {
+    id: 't-raise',
+    name: 'Prone T Raise',
+    videoId: 'r7ZSEd0E908',
+    phase: 'strengthening',
+    duration: 35,
+    reps: 12,
+    type: 'rep',
+    pose: 'prone',
+    movement: 'scapular-retraction-t',
+    target: 'Middle/Lower traps, Rhomboids, Rear delts',
+    instructions: [
+      'Lie face down, arms out to sides in a T shape, palms down',
+      'Squeeze shoulder blades together, lift arms a few inches',
+      'Hold 2 seconds at top — lead with mid-back, not neck',
+      'Lower slowly. Keep head neutral, do not arch back'
+    ]
+  },
+  'plank-shoulder-tap': {
+    id: 'plank-shoulder-tap',
+    name: 'Plank Shoulder Tap',
+    videoId: '6NTUnpIMDWU',
+    phase: 'strengthening',
+    duration: 50,
+    reps: 10,
+    type: 'rep-each-side',
+    pose: 'all-fours',
+    movement: 'anti-rotation-core',
+    target: 'Core, Shoulder stability, Anti-rotation',
+    instructions: [
+      'Start in high plank: hands under shoulders, body straight',
+      'Widen feet slightly for stability, engage abs and glutes',
+      'Tap right hand to left shoulder — keep hips STILL',
+      'Alternate sides. No hip swaying — core locked'
+    ]
+  },
+  'couch-stretch': {
+    id: 'couch-stretch',
+    name: 'Couch Stretch',
+    videoId: 'cVqb6UdfIpM',
+    phase: 'stretching',
+    duration: 120,
+    reps: null,
+    type: 'hold',
+    pose: 'half-kneeling',
+    movement: 'static-hold',
+    target: 'Hip flexors, Quads (deep stretch)',
+    instructions: [
+      'Place one foot against a wall/couch, drop knee to floor',
+      'Drive hips forward, squeeze glute on kneeling side',
+      'Keep torso upright — do not arch lower back',
+      'Hold 60 sec each side. Breathe deeply into the stretch'
+    ]
+  },
+  'standing-hamstring-stretch': {
+    id: 'standing-hamstring-stretch',
+    name: 'Standing Hamstring Stretch',
+    videoId: 'DnIEfvuJQQE',
+    phase: 'stretching',
+    duration: 60,
+    reps: null,
+    type: 'hold',
+    pose: 'standing',
+    movement: 'static-hold',
+    target: 'Hamstrings (back of thighs)',
+    instructions: [
+      'Stand tall, extend one leg forward with heel on floor, toes up',
+      'Keep back straight, chest up — hinge at hips, do not round',
+      'Feel stretch in back of thigh, not lower back',
+      'Hold 30 sec each side. Bend supporting knee slightly if needed'
+    ]
+  },
+  'thread-the-needle': {
+    id: 'thread-the-needle',
+    name: 'Thread the Needle',
+    videoId: 'UomKzkyp6kQ',
+    phase: 'stretching',
+    duration: 60,
+    reps: null,
+    type: 'hold',
+    pose: 'all-fours',
+    movement: 'thoracic-rotation',
+    target: 'Upper back, Shoulders, Thoracic spine',
+    instructions: [
+      'Start on all fours, reach right arm up toward ceiling, chest opens',
+      'Thread right arm under left arm, shoulder and head to floor',
+      'Hold 30 sec — feel stretch through upper back and shoulder',
+      'Return and switch sides. Keep hips steady'
+    ]
   }
 };
 
 // ── SCHEDULE: which exercises per day ───────────────────────────
 const SCHEDULE = {
   monday: {
-    name: 'Monday - Full Routine',
+    name: 'Monday — Routine A',
     icon: '💪',
-    phases: buildPhases()
+    phases: buildPhasesA()
   },
   tuesday: {
-    name: 'Tuesday - Full Routine',
+    name: 'Tuesday — Routine B',
     icon: '🔥',
-    phases: buildPhases()
+    phases: buildPhasesB()
   },
   wednesday: {
-    name: 'Wednesday - Full Routine',
+    name: 'Wednesday — Routine A',
     icon: '⚡',
-    phases: buildPhases()
+    phases: buildPhasesA()
   },
   thursday: {
-    name: 'Thursday - Full Routine',
+    name: 'Thursday — Routine B',
     icon: '🔄',
-    phases: buildPhases()
+    phases: buildPhasesB()
   },
   friday: {
-    name: 'Friday - Full Routine',
+    name: 'Friday — Routine A',
     icon: '🎯',
-    phases: buildPhases()
+    phases: buildPhasesA()
   },
   saturday: {
-    name: 'Saturday - Full + Cardio',
+    name: 'Saturday — Routine B',
     icon: '🌟',
-    phases: buildPhases(),
+    phases: buildPhasesB(),
     bonus: 'Bonus: 20 min brisk walk or swim 🏊‍♂️🏃'
   },
   sunday: {
@@ -387,7 +550,7 @@ const SCHEDULE = {
   }
 };
 
-function buildPhases() {
+function buildPhasesA() {
   const s = ['single-leg-bridge', 'clamshell', 'prone-y', 'chin-tuck', 'bird-dog'];
   return [
     {
@@ -424,6 +587,54 @@ function buildPhases() {
       color: '#ffe66d',
       duration: 600,
       exercises: ['hip-flexor-stretch', 'hamstring-stretch', 'pec-stretch', 'upper-trap-stretch', 'downward-dog', 'childs-pose']
+    },
+    {
+      name: 'Neural Reset & Posture',
+      nameEn: 'Neural Reset',
+      color: '#a78bfa',
+      duration: 180,
+      exercises: ['wall-angel', 'wall-posture']
+    }
+  ];
+}
+
+function buildPhasesB() {
+  const s = ['donkey-kick', 'side-lying-leg-lift', 't-raise', 'chin-tuck', 'plank-shoulder-tap'];
+  return [
+    {
+      name: 'Warm-Up & Activation',
+      nameEn: 'Warm-Up',
+      color: '#ff6b6b',
+      duration: 300,
+      exercises: ['fire-hydrant', 'cat-cow', 'glute-bridge-march']
+    },
+    {
+      name: 'Strengthening (Circuit 1/3)',
+      nameEn: 'Strength C1',
+      color: '#4ecdc4',
+      duration: 240,
+      exercises: [...s]
+    },
+    {
+      name: 'Strengthening (Circuit 2/3)',
+      nameEn: 'Strength C2',
+      color: '#4ecdc4',
+      duration: 240,
+      exercises: [...s]
+    },
+    {
+      name: 'Strengthening (Circuit 3/3)',
+      nameEn: 'Strength C3',
+      color: '#4ecdc4',
+      duration: 240,
+      exercises: [...s]
+    },
+    {
+      name: 'Stretching',
+      nameEn: 'Stretching',
+      color: '#ffe66d',
+      duration: 600,
+      exercises: ['couch-stretch', 'standing-hamstring-stretch', 'pec-stretch', 'upper-trap-stretch', 'thread-the-needle', 'childs-pose']
     },
     {
       name: 'Neural Reset & Posture',
