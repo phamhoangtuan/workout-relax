@@ -297,31 +297,7 @@ body.workout-active { background: #06060e; }
   color: var(--text-dim);
 }
 
-/* Figure container */
-.figure-container {
-  overflow: hidden;
-  background: var(--bg);
-  border-bottom: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 8px 0;
-}
-
-.figure-svg {
-  width: 100%;
-  max-width: 360px;
-  height: auto;
-  overflow: visible;
-}
-
-.figure-svg .head { fill: none; stroke-width: 2.5; }
-.figure-svg .limb { stroke-width: 2.5; stroke-linecap: round; }
-.figure-svg .joint { stroke-width: 0; }
-.figure-svg .floor { stroke-width: 1; stroke-dasharray: 4 4; }
-.figure-svg .wall { stroke-width: 2; stroke-dasharray: 6 4; }
-
-/* Reps indicator */
+/* Instructions */
 .ex-reps {
   text-align: center;
   padding: 8px 16px;
