@@ -953,6 +953,7 @@ class UIController {
     this.$schedule.classList.remove('hidden');
     this.$workout.classList.add('hidden');
     this.$complete.classList.add('hidden');
+    this.$startBtn.style.display = '';
     document.body.classList.remove('workout-active');
   }
 
@@ -960,6 +961,7 @@ class UIController {
     this.$schedule.classList.add('hidden');
     this.$workout.classList.remove('hidden');
     this.$complete.classList.add('hidden');
+    this.$startBtn.style.display = 'none';
     document.body.classList.add('workout-active');
   }
 
@@ -967,6 +969,7 @@ class UIController {
     this.$schedule.classList.add('hidden');
     this.$workout.classList.add('hidden');
     this.$complete.classList.remove('hidden');
+    this.$startBtn.style.display = 'none';
     document.body.classList.remove('workout-active');
     document.getElementById('btn-back-schedule').style.display = hideBack ? 'none' : 'inline-block';
   }
